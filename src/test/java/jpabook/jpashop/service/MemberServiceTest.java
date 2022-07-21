@@ -41,6 +41,6 @@ public class MemberServiceTest {
 
     @Test
     public void 중복_회원_예외() throws Exception {
-    //테스
+    //테스트2
     }
 }
