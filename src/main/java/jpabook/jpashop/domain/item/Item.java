@@ -13,6 +13,7 @@ import java.util.List;
 @DiscriminatorColumn(name="DTYPE")
 //부모 클래스에 선언한다. 하위 클래스를 구분하는 용도의 컬럼이다. 관례는 default = DTYPE
 @Getter
+@Setter
 public abstract class Item {
     @Id
     @GeneratedValue
