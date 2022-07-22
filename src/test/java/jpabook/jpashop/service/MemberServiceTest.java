@@ -15,9 +15,9 @@ import javax.persistence.EntityManager;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
+@RunWith(SpringRunner.class) //junit실행할때 스프링이랑 같이 실행할래?
+@SpringBootTest//Springboot를 띄운 상태로 뭔가 테스트하려면 필요함,없으면 autowired 에러남
+@Transactional//트랜잭션 걸고 돌린다음에 끝나면 롤백함(테스테에서는 기본값이 롤백인데 repository같은곳에서는 아님)
 public class MemberServiceTest {
 
     @Autowired MemberService memberService;
@@ -35,12 +35,25 @@ public class MemberServiceTest {
 
 
         //then
-        em.flush();
         Assert.assertEquals(member,memberRepository.findOne(saveId));
     }
 
-    @Test
+    @Test(expected = IllegalStateException.class)
     public void 중복_회원_예외() throws Exception {
-    //테스트2
+        //given
+        Member member1 = new Member();
+        member1.setName("kim");
+
+        Member member2 = new Member();
+        member2.setName("kim");
+
+        //when
+        memberService.join(member1);
+
+        memberService.join(member2);
+
+        //then
+        Assert.fail("예외가 발생해야 한다.");
+
     }
 }
